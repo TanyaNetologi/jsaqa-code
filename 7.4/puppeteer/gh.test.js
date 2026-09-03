@@ -1,13 +1,16 @@
 let page;
 
+beforeEach(async () => {
+  page = await browser.newPage();
+});
+
+afterEach(async () => {
+  await page.close();
+});
+
 describe("Github page tests", () => {
   beforeEach(async () => {
-    page = await browser.newPage();
     await page.goto("https://github.com/team");
-  });
-
-  afterEach(() => {
-    page.close();
   });
 
   test("The h1 header content", async () => {
@@ -32,36 +35,26 @@ describe("Github page tests", () => {
 });
 
 describe("Other GitHub pages", () => {
-  let newPage;
-
-  beforeEach(async () => {
-    newPage = await browser.newPage();
-  });
-
-  afterEach(async () => {
-    await newPage.close();
-  });
-
   test("GitHub Enterprise page title", async () => {
-    await newPage.goto("https://github.com/enterprise");
+    await page.goto("https://github.com/enterprise");
 
-    const title = await newPage.title();
+    const title = await page.title();
 
     expect(title).toContain("GitHub Enterprise");
   }, 60000);
 
   test("GitHub Pricing page title", async () => {
-    await newPage.goto("https://github.com/pricing");
+    await page.goto("https://github.com/pricing");
 
-    const title = await newPage.title();
+    const title = await page.title();
 
     expect(title).toContain("Pricing");
   }, 60000);
 
   test("GitHub Features page title", async () => {
-    await newPage.goto("https://github.com/features");
+    await page.goto("https://github.com/features");
 
-    const title = await newPage.title();
+    const title = await page.title();
 
     expect(title).toContain("GitHub");
   }, 60000);
